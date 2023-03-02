@@ -5,9 +5,9 @@ import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import { API_URL } from '../config'
 import { InventoryI } from '../interfaces/inventory'
-import CustomPagination from '../components/CustomPagination'
-import CustomTable from '../components/CustomTable'
-import FilterSelect from '../components/FilterSelect'
+import CustomPagination from '../components/Home/CustomPagination'
+import CustomTable from '../components/Home/CustomTable'
+import FilterSelect from '../components/Home/FilterSelect'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -21,6 +21,10 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true)
+    fetchInventories()
+  }, [location, page])
+
+  const fetchInventories = () => {
     axios.get(`${API_URL}/inventories?location=${location}`)
     .then((res) => {
       setInventories(res.data.data)
@@ -30,7 +34,7 @@ const Home = () => {
       // console.log(err)
       setIsLoading(false)
     })
-  }, [location])
+  }
 
   return (
     <Container>
@@ -38,9 +42,13 @@ const Home = () => {
         Inventory Management
       </h1>
       <FilterSelect location={location} setLocation={setLocation} />
-      <Button variant='primary' onClick={() => navigate("/add")}>
-        დამატება
-      </Button>
+      <Container className='d-flex justify-content-end'>
+        <Button variant='primary' 
+          onClick={() => navigate("/add")}
+        >
+          დამატება
+        </Button>
+      </Container>
       {isLoading ? (
         <div className='d-flex justify-content-center'>
           <Spinner animation="border" role="status">
@@ -48,7 +56,7 @@ const Home = () => {
           </Spinner>
         </div>
       ) : (
-        <CustomTable inventories={inventories} />
+        <CustomTable inventories={inventories} setInventories={setInventories} />
       )}
       <CustomPagination page={page} setPage={setPage} />
     </Container>

@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import { useNavigate } from 'react-router-dom'
 import CustomToast from '../components/CustomToast'
-import InventoryForm from '../components/InventoryForm'
+import InventoryForm from '../components/AddInventory/InventoryForm'
 
 const AddInventory = () => {
   const navigate = useNavigate()

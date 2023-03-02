@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import { API_URL } from '../config'
+import { API_URL } from '../../config'
 
 interface Props {
   setError: React.Dispatch<React.SetStateAction<string>>;

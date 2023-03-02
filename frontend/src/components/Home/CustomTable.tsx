@@ -1,14 +1,30 @@
 import React from 'react'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
-import { InventoryI } from '../interfaces/inventory'
+import { InventoryI } from '../../interfaces/inventory'
+import axios from 'axios';
+import { API_URL } from '../../config';
 
 
 interface Props {
-  inventories: InventoryI[]
+  inventories: InventoryI[];
+  setInventories: React.Dispatch<React.SetStateAction<InventoryI[]>>
 }
 
-const CustomTable = ({inventories}:Props) => {
+const CustomTable = ({inventories, setInventories}:Props) => {
+
+  const deleteInventory = (id: number) => {
+    // delete inventory by id
+    axios.delete(`${API_URL}/inventories/${id}`)
+    .then((res) => {
+      console.log(res.data)
+      setInventories((state) => state.filter((item) => item.id !== id))
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
   return (
     <Table striped hover responsive="md" className='mt-3'>
       <thead>
@@ -28,7 +44,9 @@ const CustomTable = ({inventories}:Props) => {
             <td className='text-nowrap'>{item.location}</td>
             <td>{item.price}</td>
             <td className='d-flex justify-content-center'>
-              <Button variant='danger' size='sm'>
+              <Button variant='danger' size='sm'
+                onClick={() => deleteInventory(item.id)}
+              >
                 წაშლა
               </Button>
             </td>
