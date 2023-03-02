@@ -10,7 +10,7 @@ interface Props {
 
 const CustomTable = ({inventories}:Props) => {
   return (
-    <Table striped hover responsive="md">
+    <Table striped hover responsive="md" className='mt-3'>
       <thead>
         <tr>
           <th>#</th>

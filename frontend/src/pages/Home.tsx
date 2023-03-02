@@ -2,14 +2,17 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Spinner from 'react-bootstrap/Spinner'
-import { APIT_URL } from '../config'
+import Button from 'react-bootstrap/Button'
+import { API_URL } from '../config'
 import { InventoryI } from '../interfaces/inventory'
 import CustomPagination from '../components/CustomPagination'
 import CustomTable from '../components/CustomTable'
 import FilterSelect from '../components/FilterSelect'
+import { useNavigate } from 'react-router-dom'
 
 
 const Home = () => {
+  const navigate = useNavigate()
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [inventories, setInventories] = useState<InventoryI[]>([])
@@ -18,7 +21,7 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    axios.get(`${APIT_URL}/inventories?location=${location}`)
+    axios.get(`${API_URL}/inventories?location=${location}`)
     .then((res) => {
       setInventories(res.data.data)
       setIsLoading(false)
@@ -35,14 +38,18 @@ const Home = () => {
         Inventory Management
       </h1>
       <FilterSelect location={location} setLocation={setLocation} />
+      <Button variant='primary' onClick={() => navigate("/add")}>
+        დამატება
+      </Button>
       {isLoading ? (
         <div className='d-flex justify-content-center'>
           <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         </div>
-      ) : null}
-      <CustomTable inventories={inventories} />
+      ) : (
+        <CustomTable inventories={inventories} />
+      )}
       <CustomPagination page={page} setPage={setPage} />
     </Container>
   )

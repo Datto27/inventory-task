@@ -7,3 +7,28 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/* component styles */
+
+/* add inventory page */
+.add-inventory-page {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  min-height: 100vh;
+}
+.home-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+.inventory-form {
+  height: 100%;
+  width: 70vw;
+}
+
+@media screen and (max-width:576px) {
+  .inventory-form {
+    width: 80vw;
+  }
+}
