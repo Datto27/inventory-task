@@ -9,6 +9,7 @@ import CustomPagination from '../components/Home/CustomPagination'
 import CustomTable from '../components/Home/CustomTable'
 import FilterSelect from '../components/Home/FilterSelect'
 import { useNavigate } from 'react-router-dom'
+import CustomToast from '../components/CustomToast'
 
 
 const Home = () => {
@@ -23,6 +24,17 @@ const Home = () => {
     setIsLoading(true)
     fetchInventories()
   }, [location, page])
+
+  useEffect(() => {
+    // error state cleaner
+    const to = setTimeout(() => {
+      setError("")
+    }, 2000)
+
+    return () => {
+      clearTimeout(to)
+    }
+  }, [error])
 
   const fetchInventories = () => {
     axios.get(`${API_URL}/inventories?location=${location}`)
@@ -56,9 +68,18 @@ const Home = () => {
           </Spinner>
         </div>
       ) : (
-        <CustomTable inventories={inventories} setInventories={setInventories} />
+        <CustomTable 
+          inventories={inventories} setInventories={setInventories} 
+          setError={setError}
+        />
       )}
       <CustomPagination page={page} setPage={setPage} />
+      {error && (
+        <CustomToast type='danger'
+          show={error ? true:false} 
+          text={error} 
+        />
+      )}
     </Container>
   )
 }

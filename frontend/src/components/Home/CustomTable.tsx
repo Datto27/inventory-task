@@ -4,25 +4,27 @@ import Button from 'react-bootstrap/Button'
 import { InventoryI } from '../../interfaces/inventory'
 import axios from 'axios';
 import { API_URL } from '../../config';
+import InventoryTableRow from './InventoryTableRow';
 
 
 interface Props {
   inventories: InventoryI[];
   setInventories: React.Dispatch<React.SetStateAction<InventoryI[]>>
+  setError: React.Dispatch<React.SetStateAction<string>>
 }
 
-const CustomTable = ({inventories, setInventories}:Props) => {
+// invetories table
+const CustomTable = ({inventories, setInventories, setError}:Props) => {
 
-  const deleteInventory = (id: number) => {
+  const deleteInventory = async (id: number) => {
     // delete inventory by id
-    axios.delete(`${API_URL}/inventories/${id}`)
-    .then((res) => {
-      console.log(res.data)
+    try {
+      const res = await axios.delete(`${API_URL}/inventories/${id}`)
       setInventories((state) => state.filter((item) => item.id !== id))
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    } catch(err) {
+      // console.log(err)
+      setError("წაშლა ვერ მოხერხდა")
+    }
   }
 
   return (
@@ -33,24 +35,16 @@ const CustomTable = ({inventories, setInventories}:Props) => {
           <th>სახელი</th>
           <th>მდებარეობა</th>
           <th>ფასი</th>
-          <th className='w-5'>ოპერაციები</th>
+          <th style={{width:"10%"}}>ოპერაციები</th>
         </tr>
       </thead>
       <tbody>
         {inventories.map((item, i) => {
-          return <tr key={i}>
-            <td>{i+1}</td>
-            <td className='text-nowrap'>{item.name}</td>
-            <td className='text-nowrap'>{item.location}</td>
-            <td>{item.price}</td>
-            <td className='d-flex justify-content-center'>
-              <Button variant='danger' size='sm'
-                onClick={() => deleteInventory(item.id)}
-              >
-                წაშლა
-              </Button>
-            </td>
-          </tr>
+          return <InventoryTableRow key={i} 
+            i={i} 
+            item={item}
+            deleteItem={deleteInventory}
+          />
         })}
       </tbody>
     </Table>
