@@ -14,6 +14,7 @@ const CustomPagination = ({page, setPage, count}: Props) => {
   let showLeftElipsis = page >= 4
   let showRightElipsis = pagesCount-3 >= page
 
+  
   const onNextPage = () => {
     if(page < pagesCount) setPage(state => state+1)
   }
