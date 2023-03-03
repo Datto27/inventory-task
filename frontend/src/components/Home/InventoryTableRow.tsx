@@ -17,7 +17,7 @@ const InventoryTableRow = ({th, item, deleteItem}:Props) => {
       <td>{th}</td>
       <td className='text-nowrap'>{item.name}</td>
       <td className='text-nowrap'>{item.location}</td>
-      <td>{item.price}</td>
+      <td>{item.price} ₾</td>
       <td className='d-flex justify-content-center'>
         {isLoading ? (
           <Button variant="danger" size="sm">

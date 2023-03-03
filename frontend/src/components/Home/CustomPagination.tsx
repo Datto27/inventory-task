@@ -91,7 +91,7 @@ const CustomPagination = ({page, setPage, count}: Props) => {
   )
 
   return (
-    <Pagination className='d-flex justify-content-end m-4 mb-5'>
+    <Pagination className='d-flex justify-content-end'>
       <Pagination.Prev onClick={onPrevPage} />
       <Pagination.Item active={page===1 ? true:false}
         onClick={() => onPageNumber(1)}

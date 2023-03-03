@@ -34,7 +34,7 @@ export const getInvetories =  (req:Request, res:Response) => {
   })
   .then((data) => {
     // console.log(data)
-    Inventory.count()
+    Inventory.count({where: { ...filter }})
       .then((count) => {
         // console.log(count)
         res.status(200).json({data, count})

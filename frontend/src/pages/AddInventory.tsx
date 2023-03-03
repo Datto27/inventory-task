@@ -41,7 +41,7 @@ const AddInventory = () => {
         onClick={() => navigate("/")}
       >
         <i className="bi bi-arrow-left-circle"></i>
-        <span className='m-2'>Home</span>
+        <span className='m-2'>მთავარი</span>
       </Button>
       <InventoryForm setError={setError} setSuccess={setSuccess} />
       {success && (

@@ -34,13 +34,15 @@ const Home = () => {
   }, [error])
 
   useEffect(() => {
-    setIsLoading(true)
     fetchInventories()
   }, [location, page])
 
   const fetchInventories = () => {
     const skip = (page-1) * rows
     const limit = rows
+    
+    setIsLoading(true)
+
     axios.get(`${API_URL}/inventories?location=${location}&skip=${skip}&limit=${limit}`)
     .then((res) => {
       setInventories(res.data.data)
@@ -59,7 +61,12 @@ const Home = () => {
         Inventory Management
       </h1>
       <FilterSelect location={location} setLocation={setLocation} />
-      <Container className='d-flex justify-content-end'>
+      <Container className='d-flex justify-content-between'>
+        <Button variant='warning'
+          onClick={fetchInventories}
+        >
+          <i className="bi bi-arrow-counterclockwise" style={{color:"white"}}/>
+        </Button>
         <Button variant='primary' 
           onClick={() => navigate("/add")}
         >
@@ -78,7 +85,10 @@ const Home = () => {
           setError={setError}
         />
       )}
-      <CustomPagination page={page} setPage={setPage} count={invCount} />
+      <div className='d-flex align-items-center justify-content-between mb-5 mt-3'>
+        <h2>{invCount}</h2>
+        {invCount > rows && <CustomPagination page={page} setPage={setPage} count={invCount} />}
+      </div>
       {error && (
         <CustomToast type='danger'
           show={error ? true:false} 
