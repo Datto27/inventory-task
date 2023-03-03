@@ -5,16 +5,16 @@ import { InventoryI } from '../../interfaces/inventory'
 
 interface Props {
   item: InventoryI;
-  i: number;
+  th: number;
   deleteItem: (id:number) => Promise<void>
 }
 
-const InventoryTableRow = ({i, item, deleteItem}:Props) => {
+const InventoryTableRow = ({th, item, deleteItem}:Props) => {
   const [isLoading, setIsLoading] = useState(false)
 
   return (
-    <tr key={i}>
-      <td>{i+1}</td>
+    <tr>
+      <td>{th}</td>
       <td className='text-nowrap'>{item.name}</td>
       <td className='text-nowrap'>{item.location}</td>
       <td>{item.price}</td>

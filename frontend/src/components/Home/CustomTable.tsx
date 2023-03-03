@@ -5,16 +5,20 @@ import { InventoryI } from '../../interfaces/inventory'
 import axios from 'axios';
 import { API_URL } from '../../config';
 import InventoryTableRow from './InventoryTableRow';
+import { rows } from '../../constants/inventory';
 
 
 interface Props {
   inventories: InventoryI[];
-  setInventories: React.Dispatch<React.SetStateAction<InventoryI[]>>
-  setError: React.Dispatch<React.SetStateAction<string>>
+  setInventories: React.Dispatch<React.SetStateAction<InventoryI[]>>;
+  setError: React.Dispatch<React.SetStateAction<string>>;
+  page: number
 }
 
 // invetories table
-const CustomTable = ({inventories, setInventories, setError}:Props) => {
+const CustomTable = ({
+  inventories, setInventories, setError, page
+}:Props) => {
 
   const deleteInventory = async (id: number) => {
     // delete inventory by id
@@ -40,8 +44,9 @@ const CustomTable = ({inventories, setInventories, setError}:Props) => {
       </thead>
       <tbody>
         {inventories.map((item, i) => {
+          // console.log((page-1) * 20 + i+1)
           return <InventoryTableRow key={i} 
-            i={i} 
+            th={(page-1) * rows + i+1} 
             item={item}
             deleteItem={deleteInventory}
           />

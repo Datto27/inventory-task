@@ -34,7 +34,14 @@ export const getInvetories =  (req:Request, res:Response) => {
   })
   .then((data) => {
     // console.log(data)
-    res.status(200).json({data})
+    Inventory.count()
+      .then((count) => {
+        // console.log(count)
+        res.status(200).json({data, count})
+      })
+      .catch((err) => {
+        res.status(500).json({msg: err})
+      })
   }).catch((err) => {
     // console.log(err)
     res.status(500).json({msg: err})
