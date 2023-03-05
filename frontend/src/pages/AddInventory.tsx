@@ -25,7 +25,7 @@ const AddInventory = () => {
     // error state cleaner
     const to = setTimeout(() => {
       setError("")
-    }, 2000)
+    }, 2500)
 
     return () => {
       clearTimeout(to)
