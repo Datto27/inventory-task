@@ -52,7 +52,7 @@ const InventoryForm = ({
     const randomLoc = locations[Math.floor(Math.random() * (max - min + 1)) + min]
     setLocation(randomLoc)
     setName("test"+createdItems)
-    setPrice(10)
+    setPrice((Math.random() * 100).toFixed())
   }
 
   const priceChangeHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
